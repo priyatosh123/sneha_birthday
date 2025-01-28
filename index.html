@@ -40,22 +40,10 @@
         .popup button:hover, .main-content button:hover {
             background: #e85a4f;
         }
-        .flower-emoji {
-            font-size: 2em;
-            margin: 10px 0;
-        }
-        .image-container {
-            margin: 20px 0;
-        }
-        .image-container img {
-            width: 150px;
-            height: auto;
-            border-radius: 50%;
-            margin: 5px;
-        }
-        .countdown {
-            font-size: 1.5em;
-            margin: 20px 0;
+        .final-message {
+            font-size: 1.2em;
+            color: #ff6f61;
+            margin-top: 20px;
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: scale(0.9); }
@@ -65,107 +53,42 @@
 </head>
 <body>
 
-    <!-- First Popup -->
-    <div class="popup" id="popup1">
-        <h1>🌸 Open this MY BUbu my Jaanu 🌸</h1>
-        <p class="flower-emoji">💐💖💐</p>
-        <button onclick="showPopup2()">Next</button>
-    </div>
-
-    <!-- Second Popup -->
-    <div class="popup" id="popup2">
-        <h1>🌹 I love you so much! 🌹</h1>
-        <p>💝 There is a surprise for you! 💝</p>
-        <button onclick="showMainContent()">Open Surprise</button>
-    </div>
-
     <!-- Main Content -->
     <div class="main-content" id="mainContent">
         <h1>🎉 Countdown to Your Birthday 🎉</h1>
-        <p class="countdown" id="countdown"></p>
-        <div class="image-container">
-            <!-- Replace 'me.jpg' and 'her.jpg' with the Imgur URLs or other image URLs -->
-            <img src="https://i.postimg.cc/FKrvQC58/us.jpg" alt="Us">
-    
+        <p id="countdown"></p>
+        <div class="final-message" id="finalMessage" style="display: none;">
+            Happiest Birthday Bubu! 💕 Love you the most in the whole world!  
+            <br> 
+            This feels like magic being with you! 🤩✨ 
+            <br> 
+            I’ll always be grateful for your existence. Please, never leave me. 🥰🥺❤️
         </div>
-        <p id="dailyMessage"></p>
     </div>
 
     <script>
-        // Show the first popup on page load
-        document.getElementById("popup1").style.display = "block";
-
-        // Function to show the second popup
-        function showPopup2() {
-            document.getElementById("popup1").style.display = "none";
-            document.getElementById("popup2").style.display = "block";
-        }
-
-        // Function to show the main content
-        function showMainContent() {
-            document.getElementById("popup2").style.display = "none";
-            document.getElementById("mainContent").style.display = "block";
-            updateCountdown();
-            showDailyMessage();
-        }
-
-        // Countdown logic
-        const birthday = new Date("2025-01-27");
+        const birthday = new Date("2025-01-27T00:00:00");
         const countdownElement = document.getElementById("countdown");
+        const finalMessageElement = document.getElementById("finalMessage");
 
         function updateCountdown() {
             const today = new Date();
             const difference = birthday - today;
-            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-            countdownElement.textContent = `${days} days ${hours} hours ${minutes} minutes ${seconds} seconds until your special day! 🎂`;
-        }
 
-        // Daily message logic
-        const messages = [
-            "You're amazing! 😘",
-            "Can't wait for your birthday! 🧸",
-            "Sending you hugs and love! 😘",
-            "You're my sunshine! 🧸",
-            "Arjun Riya ki Mummy ILY😘",
-            "Stay with me forever and ily more everyday🧸",
-            "Counting down with excitement and love! 😘",
-            "Can't wait to have a small sweet family with you 💕",
-            "I feel blessed having you 😍🥰",
-            "My bestfriend  😘 my wifey🫣",
-            "my sweetest BUbu 😋😙",
-            "my Most precious gift 😭🥹😇",
-        ];
-
-        const messageElement = document.getElementById("dailyMessage");
-
-        function showDailyMessage() {
-            const today = new Date();
-            const startDate = new Date("2025-01-13"); // Start date
-            const dayIndex = Math.floor((today - startDate) / (1000 * 60 * 60 * 24)) % messages.length;
-            messageElement.textContent = messages[dayIndex];
-        }
-
-        // Firecracker on 27th Jan at 12:00 AM
-        function checkFirecracker() {
-            const now = new Date();
-            const firecrackerTime = new Date("2025-01-27T00:00:00");
-            if (now >= firecrackerTime && now < firecrackerTime.getTime() + 1000) {
-                alert("🎆 Happy Birthday! 🎆");
-                document.body.style.background = "yellow";
-                showBirthdayMessage();
+            if (difference <= 0) {
+                // Birthday is today or has passed
+                countdownElement.style.display = "none";
+                finalMessageElement.style.display = "block";
+            } else {
+                // Show countdown
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                countdownElement.textContent = `${days} days until your special day! 🎂`;
+                finalMessageElement.style.display = "none";
             }
         }
 
-        // Full Birthday Message
-        function showBirthdayMessage() {
-            alert("Happiest Birthday Bubu .. Love you the most the most the most In the whole world 🌍 ❤️ \n\n..Yaar this feels like magic being with you 🤩✨\nI love you so so so much Bubu meri jaanuuu💕\nGod bless the dinosaur that died to make that fossil fuel that was treated to become petrol in the car that took ur mumma to the hospital to give birth to you 😉🤣🤣❤️❤️🌍🌍😍\nTumhare saath har birthday saath me manana hai and I don't how to thanks god that he gifted to me you ..the sweetest girl who has supported me at my lowest..who is always standing there for me in every situation. I'll always be grateful for you existence. yaar aur sab I'll write baad me in the Please kabhi chorke mat jana🥲😭🫂🫂");
-        }
-
-        setInterval(checkFirecracker, 1000);  // Check every second
-
+        // Update countdown on page load
+        updateCountdown();
     </script>
 
 </body>
